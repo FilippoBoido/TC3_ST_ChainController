@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <Itf Name="I_Chain" Id="{7715b3d1-50ff-4b92-8bb5-0e96c4e05098}">
+    <Declaration><![CDATA[INTERFACE I_Chain
+]]></Declaration>
+    <Property Name="getDefinition" Id="{ddc1d10c-6789-4589-b30f-51edf9a15f33}">
+      <Declaration><![CDATA[PROPERTY getDefinition : ST_ChainDefinition]]></Declaration>
+      <Get Name="Get" Id="{d489da7f-1a23-4aa9-91d4-d2d9d7dca888}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="getRefChainReleases" Id="{e5db7089-1d60-4597-8d73-a70758c50743}">
+      <Declaration><![CDATA[PROPERTY getRefChainReleases : REFERENCE TO ARRAY[1..cMaxChains] OF BOOL]]></Declaration>
+      <Get Name="Get" Id="{0292425b-d1ca-42b1-af29-8119aee9f933}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+    <Property Name="getRefReleaseResult" Id="{b5b91659-716c-4627-9804-1bb171c9d22f}">
+      <Declaration><![CDATA[PROPERTY getRefReleaseResult : REFERENCE TO BOOL]]></Declaration>
+      <Get Name="Get" Id="{6f931fb6-d496-4f01-aa15-3441af1f65c3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+    </Property>
+  </Itf>
+</TcPlcObject>

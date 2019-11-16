@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_ChainStateMachine" Id="{8d5adb6a-a6a8-44d8-85f9-186f84437c5e}">
+    <Declaration><![CDATA[TYPE ST_ChainStateMachine :
+STRUCT
+	bInit : BOOL;
+	bReady : BOOL;
+	bBusy : BOOL;
+	bStop : BOOL;
+	bWait : BOOL;
+	bError : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="MAIN" Id="{358f7823-9894-4896-a8c5-c2f64c09a379}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	step : UINT;
+	fbChainController : FB_ChainController;
+	fbChain1 : FB_TestChain1;
+	fbChain2 : FB_TestChain2;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbChain1(io_fbChainController := fbChainController);
+fbChain2(io_fbChainController := fbChainController);
+
+fbChain1.define(uiChainNumber := 1, sChainName := 'fbChain1');
+fbChain2.define(uiChainNumber := 2, sChainname := 'fbChain2');
+
+CASE step OF
+
+	10: 
+		fbChainController
+			.addChain(fbChain1)
+			.addChain(fbChain2);
+		
+		fbChain1.cmdIgnite();
+		fbChain2.cmdIgnite();	
+		step := 20;
+		
+	20:
+	
+		
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="44" Count="1" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="48" Count="2" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="24" Count="2" />
+      <LineId Id="42" Count="1" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="14" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

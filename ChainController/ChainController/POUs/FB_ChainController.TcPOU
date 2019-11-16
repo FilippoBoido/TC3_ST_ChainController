@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_ChainController" Id="{7144242f-ae34-406f-bc46-5e10bcb540d2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ChainController IMPLEMENTS I_ChainController
+VAR_INPUT
+	
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	aChains : ARRAY[1..cMaxChains] OF I_Chain;
+	uiNextChain : UINT := 1;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="addChain" Id="{c0f25f09-a2f4-4e3d-bdf3-a5525cb54930}">
+      <Declaration><![CDATA[METHOD addChain : I_ChainController 
+VAR_INPUT
+	itfChain : I_Chain;
+END_VAR
+VAR
+	i: UINT;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[addChain := THIS^;
+
+IF itfChain = 0 
+OR uiNextChain > cMaxChains 
+THEN
+	RETURN;
+END_IF
+
+//chain already added?
+FOR i := 1 TO uiNextChain-1 DO
+	IF aChains[i] = itfChain
+	THEN
+		//yes, already added
+		RETURN;
+	END_IF
+END_FOR
+
+aChains[uiNextChain] := itfChain;
+uiNextChain := uiNextChain + 1;
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="releaseCheck" Id="{2fdf2714-96bc-44a0-8f07-4c1dbca55a1e}">
+      <Declaration><![CDATA[METHOD releaseCheck : I_ChainController
+VAR_INPUT
+	itfContractor : I_Chain;
+END_VAR
+VAR
+	i : UINT;
+	rReleaseResult :  REFERENCE TO BOOL; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[releaseCheck := THIS^;
+
+FOR i := 1 TO uiNextChain-1 DO
+	
+	IF itfContractor = aChains[i]
+	THEN
+		
+		rReleaseResult REF= aChains[i].getRefReleaseResult;
+		rReleaseResult := TRUE;
+		EXIT;
+	END_IF
+	
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="releaseForChain" Id="{3135d5bb-ff64-4a21-86af-d7f44a5b6f6f}">
+      <Declaration><![CDATA[METHOD Public releaseForChain : I_ChainController
+VAR_INPUT
+	sChainToRelease : STRING;
+	itfCommissioner : I_Chain;
+END_VAR
+VAR
+	i : UINT;
+	j: UINT;
+	stChainDefinition : ST_ChainDefinition; 
+	aChainReleases : REFERENCE TO ARRAY[1..cMaxChains] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[releaseForChain := THIS^;
+
+//search for the chain to release
+FOR i := 1 TO uiNextChain-1 DO
+	stChainDefinition := aChains[i].GetDefinition;
+	IF  stChainDefinition.sChainName = sChainToRelease
+	THEN
+		aChainReleases REF= aChains[i].getRefChainReleases;
+		//search for the commissioner
+		FOR j := 1 TO uiNextChain-1 DO
+			IF aChains[j] = itfCommissioner
+			THEN
+				aChainReleases[j] := TRUE;
+			END_IF
+		END_FOR
+			
+	END_IF
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="releaseFromChain" Id="{12346a28-86ca-4189-a0b4-52404dd0e614}">
+      <Declaration><![CDATA[METHOD Public releaseFromChain : I_ChainController
+VAR_INPUT
+	sChainReleasing : STRING;
+	itfContractor : I_Chain;
+END_VAR
+VAR
+	i : UINT;
+	j: UINT;
+	stChainDefinition : ST_ChainDefinition; 
+	aChainReleases : REFERENCE TO ARRAY[1..cMaxChains] OF BOOL;
+	rReleaseResult : REFERENCE TO BOOL; 
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[releaseFromChain := THIS^;
+
+//search for the contractor
+FOR i := 1 TO uiNextChain-1 DO
+	
+	IF itfContractor = aChains[i]
+	THEN
+		aChainReleases REF= aChains[i].getRefChainReleases;
+		rReleaseResult REF= aChains[i].getRefReleaseResult;
+		FOR j := 1 TO uiNextChain-1 DO
+			stChainDefinition := aChains[j].getDefinition;
+			IF stChainDefinition.sChainName = sChainReleasing
+			THEN
+				rReleaseResult := rReleaseResult AND aChainReleases[j]; 
+			END_IF
+			
+		END_FOR
+		
+	END_IF
+	
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="releaseResult" Id="{932b4c63-39e9-43dd-a255-e97d105208fa}">
+      <Declaration><![CDATA[METHOD releaseResult : Bool
+VAR_INPUT
+	itfRequester : I_Chain;
+END_VAR
+VAR
+	i,j : UINT;
+	rReleaseResult : REFERENCE TO BOOL; 
+	aChainReleases : REFERENCE TO ARRAY[1..cMaxChains] OF BOOL;
+END_VAR]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR i := 1 TO cMaxChains DO
+	
+	IF  itfRequester = aChains[i]
+	THEN
+		IF aChains[i].getRefReleaseResult 
+		THEN
+			releaseResult := TRUE;
+			aChainReleases REF= aChains[i].getRefChainReleases;
+			//reset the releases
+			FOR j := 1 TO uiNextChain-1 DO
+				aChainReleases[j] := FALSE;
+			END_FOR
+			EXIT;
+		END_IF
+	END_IF
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_ChainController">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChainController.addChain">
+      <LineId Id="32" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="20" Count="4" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChainController.releaseCheck">
+      <LineId Id="35" Count="1" />
+      <LineId Id="7" Count="5" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="23" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChainController.releaseForChain">
+      <LineId Id="46" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="17" Count="1" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="25" Count="1" />
+      <LineId Id="30" Count="1" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChainController.releaseFromChain">
+      <LineId Id="46" Count="1" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="10" Count="3" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="2" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="14" Count="1" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_ChainController.releaseResult">
+      <LineId Id="9" Count="3" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="28" Count="2" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

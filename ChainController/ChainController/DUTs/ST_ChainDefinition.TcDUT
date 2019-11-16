@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="ST_ChainDefinition" Id="{89f6de98-5853-4709-a671-70ab2dd0213e}">
+    <Declaration><![CDATA[TYPE ST_ChainDefinition :
+STRUCT
+	uiChainNumber : UINT;
+	sChainName : STRING;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

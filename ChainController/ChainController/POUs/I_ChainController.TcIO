@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <Itf Name="I_ChainController" Id="{e3242905-8342-45d0-836e-b3cfbaafbabd}">
+    <Declaration><![CDATA[INTERFACE I_ChainController
+]]></Declaration>
+    <Method Name="addChain" Id="{701c894c-d937-4641-9a3f-44dfc24f176f}">
+      <Declaration><![CDATA[METHOD addChain : I_ChainController 
+VAR_INPUT
+	itfChain : I_Chain;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="releaseForChain" Id="{4bbaaa44-534a-41a1-80a4-5024df2c342e}">
+      <Declaration><![CDATA[METHOD releaseForChain : I_ChainController
+VAR_INPUT
+	sChainToRelease : STRING;
+	itfCommissioner : I_Chain;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="releaseFromChain" Id="{30f3d0cf-7fcb-4b64-bfe5-7dabfd1a983d}">
+      <Declaration><![CDATA[METHOD releaseFromChain : I_ChainController
+VAR_INPUT
+	sChainReleasing : STRING;
+	itfContractor : I_Chain;
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="releaseResult" Id="{e1fbf38c-e6a7-4739-ba2e-e2a5ca4593b6}">
+      <Declaration><![CDATA[METHOD releaseResult : Bool
+VAR_INPUT
+	itfRequester : I_Chain;
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

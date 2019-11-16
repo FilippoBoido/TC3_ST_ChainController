@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="FB_TestChain1" Id="{743f7692-10f4-4273-a2c5-6e6083703b28}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_TestChain1 EXTENDS FB_Chain
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[super^(io_fbChainController := io_fbChainController);]]></ST>
+    </Implementation>
+    <Method Name="init" Id="{81bb4ced-ddc0-4275-a5e5-a2009b9dbcb0}">
+      <Declaration><![CDATA[METHOD init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[CASE initStep OF
+
+0:
+	IF io_fbChainController
+		.releaseCheck(THIS^)
+		.releaseFromChain(sChainReleasing := 'fbChain2', THIS^)
+		.releaseResult(THIS^) 
+	THEN
+		initStep := 10;
+	END_IF
+10:
+	;
+20:
+	;
+30:
+
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="FB_TestChain1">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain1.init">
+      <LineId Id="5" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="5" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="12" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <DUT Name="E_ChainStateMachine" Id="{7582dd0e-05d6-45a2-911b-2ff34d7ef8f2}">
+    <Declaration><![CDATA[TYPE E_ChainStateMachine :
+(
+	eNoState := 0,
+	eInit,
+	eReady,
+	eBusy,
+	eStop,
+	eWait,
+	eError
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
