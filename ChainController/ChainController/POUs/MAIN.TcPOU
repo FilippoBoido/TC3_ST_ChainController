@@ -23,8 +23,8 @@ CASE step OF
 			.addChain(fbChain1)
 			.addChain(fbChain2);
 		
-		fbChain1.cmdIgnite();
-		fbChain2.cmdIgnite();	
+		fbChain1.Execute();
+		fbChain2.Execute();	
 		step := 20;
 		
 	20:

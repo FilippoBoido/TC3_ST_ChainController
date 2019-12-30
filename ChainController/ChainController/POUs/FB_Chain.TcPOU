@@ -1,99 +1,36 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_Chain" Id="{61defab6-4098-4715-9800-1cf7ddffc9a5}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK FB_Chain IMPLEMENTS I_Chain
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Chain EXTENDS StateMachine IMPLEMENTS I_Chain
 VAR_IN_OUT
 	io_fbChainController : FB_ChainController;
 END_VAR
-
+VAR_OUTPUT
+	bReleaseResult : BOOL;
+END_VAR
 VAR
 	eChainStateMachine : E_ChainStateMachine;
 	uiChainNumber : UINT;
 	sChainName : STRING;
-	bReleaseResult : BOOL;
+	fbReleaseResult : BoolOut;
 	aChainReleases : ARRAY[1..cMaxChains] OF BOOL;
 
-	initStep : UINT;
-	readyStep : UINT;
-	stopStep : UINT;
-	waitStep : UINT;
-	busyStep : UINT;
-	errorStep : UINT;
+	fbStepWorkerInit : FB_StepWorker;
+	fbStepWorkerReady : FB_StepWorker;
+	fbStepWorkerBusy : FB_StepWorker;
+	fbStepWorkerWaiting : FB_StepWorker;
+	fbStepWorkerError : FB_StepWorker;
+
 	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[CASE eChainStateMachine OF
+      <ST><![CDATA[SUPER^();
+bReleaseResult := fbReleaseResult.getValue;
 
-	eNoState:;
-	
-	eInit:
-		init();
-	eReady:
-		ready();
-	eBusy:
-		busy();
-	eStop:
-		stop();
-	eWait:
-		wait();
-	eError:
-		error();
-	
-END_CASE
 
 ]]></ST>
     </Implementation>
-    <Folder Name="Cmds" Id="{eba69806-6f17-49d8-8547-c2a5db1f3373}" />
-    <Folder Name="StateMachine" Id="{3e501262-552e-4906-81f7-0f122356c12f}" />
-    <Method Name="busy" Id="{41e23a19-ca1a-4ab2-bf57-0615d640f1be}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD busy : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="cmdIgnite" Id="{a987e809-a178-4f74-834d-766607f0e551}" FolderPath="Cmds\">
-      <Declaration><![CDATA[METHOD cmdIgnite : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[IF eChainStateMachine = eNoState
-THEN
-	eChainStateMachine := eInit;
-END_IF]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="cmdStart" Id="{e8a94ad1-ead3-4be8-a635-117ea644614d}" FolderPath="Cmds\">
-      <Declaration><![CDATA[METHOD cmdStart : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[eChainStateMachine := eBusy;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="cmdStop" Id="{4afc3dcc-acd9-4614-8c47-84b918201743}" FolderPath="Cmds\">
-      <Declaration><![CDATA[METHOD cmdStop : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[eChainStateMachine := eStop;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="cmdWait" Id="{e2231bc9-8382-473f-919e-63f7920dd9cf}" FolderPath="Cmds\">
-      <Declaration><![CDATA[METHOD cmdWait : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[eChainStateMachine := eWait;]]></ST>
-      </Implementation>
-    </Method>
     <Method Name="define" Id="{6a1f9010-15d8-4362-9dd0-684cb74637ee}">
       <Declaration><![CDATA[METHOD define : BOOL
 VAR_INPUT
@@ -104,15 +41,6 @@ END_VAR
       <Implementation>
         <ST><![CDATA[THIS^.uiChainNumber := uiChainNumber;
 THIS^.sChainName := sChainName;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="error" Id="{f9e2dffb-3dcd-40ed-bdef-1153b6b347c0}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD error : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
       </Implementation>
     </Method>
     <Property Name="getDefinition" Id="{dfa516b6-7b9e-48e4-b1c2-6cbfc0f5ec4f}">
@@ -138,9 +66,11 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="getRefReleaseResult" Id="{8f064f8f-a181-4cf8-a639-5dff70e85ae9}">
-      <Declaration><![CDATA[PROPERTY getRefReleaseResult : REFERENCE TO BOOL]]></Declaration>
-      <Get Name="Get" Id="{0190164f-adf4-4ce6-8d29-5a789f3f74c6}">
+    <Property Name="getRefReleaseResult" Id="{9c2e1211-a1a2-406b-b645-c5646c3bc7bf}">
+      <Declaration><![CDATA[{warning 'Eigenschaftenimplementierung hinzufügen'}
+PROPERTY getRefReleaseResult : REFERENCE TO BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{05877000-c74a-4b40-8f69-1ad4aeb43509}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
@@ -149,95 +79,25 @@ END_VAR
         </Implementation>
       </Get>
     </Property>
-    <Property Name="getState" Id="{b45171cf-51cb-4113-83e1-6b1f28073b93}">
-      <Declaration><![CDATA[PROPERTY getState : E_ChainStateMachine]]></Declaration>
-      <Get Name="Get" Id="{1d7abf88-f3d5-4a38-8c8b-2f100e5211d5}">
+    <Property Name="getReleaseResult" Id="{89b96a0c-0e42-4023-b014-20c909692ab0}">
+      <Declaration><![CDATA[PROPERTY getReleaseResult : BoolOut]]></Declaration>
+      <Get Name="Get" Id="{8216fba6-f678-4f64-97b9-1b6fff538ab8}">
         <Declaration><![CDATA[VAR
 END_VAR
 ]]></Declaration>
         <Implementation>
-          <ST><![CDATA[getState := eChainStateMachine;]]></ST>
+          <ST><![CDATA[getReleaseResult := fbReleaseResult;]]></ST>
         </Implementation>
       </Get>
     </Property>
-    <Method Name="init" Id="{470eeee9-0423-4454-aea2-5ff4067b4f68}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD init : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="ready" Id="{9a1b1eaa-4a7a-4010-a70f-549fb2dac350}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD ready : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="stop" Id="{406fbf3b-b413-4d50-b8c2-cd1cca998cbd}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD stop : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="wait" Id="{ca649318-547b-4814-96a5-c2df492dc1fc}" FolderPath="StateMachine\">
-      <Declaration><![CDATA[METHOD wait : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[]]></ST>
-      </Implementation>
-    </Method>
     <LineIds Name="FB_Chain">
-      <LineId Id="9" Count="0" />
-      <LineId Id="17" Count="0" />
-      <LineId Id="16" Count="0" />
-      <LineId Id="26" Count="0" />
-      <LineId Id="18" Count="0" />
-      <LineId Id="27" Count="0" />
-      <LineId Id="19" Count="0" />
-      <LineId Id="28" Count="0" />
-      <LineId Id="20" Count="0" />
-      <LineId Id="30" Count="0" />
-      <LineId Id="21" Count="0" />
-      <LineId Id="31" Count="0" />
-      <LineId Id="22" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="23" Count="0" />
-      <LineId Id="33" Count="0" />
-      <LineId Id="24" Count="1" />
+      <LineId Id="63" Count="0" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="25" Count="0" />
       <LineId Id="41" Count="1" />
-    </LineIds>
-    <LineIds Name="FB_Chain.busy">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.cmdIgnite">
-      <LineId Id="6" Count="1" />
-      <LineId Id="5" Count="0" />
-      <LineId Id="8" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.cmdStart">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.cmdStop">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.cmdWait">
-      <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Chain.define">
       <LineId Id="8" Count="0" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.error">
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_Chain.getDefinition.Get">
@@ -250,20 +110,8 @@ END_VAR
     <LineIds Name="FB_Chain.getRefReleaseResult.Get">
       <LineId Id="2" Count="0" />
     </LineIds>
-    <LineIds Name="FB_Chain.getState.Get">
+    <LineIds Name="FB_Chain.getReleaseResult.Get">
       <LineId Id="2" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.init">
-      <LineId Id="6" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.ready">
-      <LineId Id="12" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.stop">
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.wait">
-      <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

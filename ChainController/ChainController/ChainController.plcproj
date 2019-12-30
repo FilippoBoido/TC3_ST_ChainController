@@ -17,7 +17,7 @@
     <LibraryReferences>{9d2e4d94-b3be-4207-8597-7dc460ea3ee3}</LibraryReferences>
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
-    <Title>ChainController</Title>
+    <Title>ChainControllerLib</Title>
     <ProjectVersion>1.0.0.0</ProjectVersion>
     <Author>Filippo Boido</Author>
   </PropertyGroup>
@@ -71,6 +71,14 @@
     <Folder Include="POUs" />
   </ItemGroup>
   <ItemGroup>
+    <PlaceholderReference Include="StateMachineLib">
+      <DefaultResolution>StateMachineLib, * (FactoryAutomation)</DefaultResolution>
+      <Namespace>StateMachineLib</Namespace>
+    </PlaceholderReference>
+    <PlaceholderReference Include="StepWorkerLib">
+      <DefaultResolution>StepWorkerLib, * (FactoryAutomation)</DefaultResolution>
+      <Namespace>StepWorkerLib</Namespace>
+    </PlaceholderReference>
     <PlaceholderReference Include="Tc2_Standard">
       <DefaultResolution>Tc2_Standard, * (Beckhoff Automation GmbH)</DefaultResolution>
       <Namespace>Tc2_Standard</Namespace>

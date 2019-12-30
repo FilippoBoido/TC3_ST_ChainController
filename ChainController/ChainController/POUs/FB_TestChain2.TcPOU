@@ -12,18 +12,18 @@ END_VAR
     <Implementation>
       <ST><![CDATA[super^(io_fbChainController := io_fbChainController);]]></ST>
     </Implementation>
-    <Method Name="init" Id="{438c0a1d-f1f3-47de-9174-4ef5d89284e7}">
-      <Declaration><![CDATA[METHOD init : BOOL
+    <Method Name="Busy" Id="{4e42797b-f0e1-4d29-92aa-47174c5d6458}">
+      <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
 VAR_INPUT
 END_VAR
 ]]></Declaration>
       <Implementation>
-        <ST><![CDATA[CASE initStep OF
+        <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
 0:
 
 10:
 	io_fbChainController.releaseForChain(sChainToRelease := 'fbChain1',THIS^);
-	initStep := 20;
+	fbStepWorkerInit.mNextStep(20);
 20:
 
 30:
@@ -31,15 +31,83 @@ END_VAR
 END_CASE]]></ST>
       </Implementation>
     </Method>
+    <Method Name="Error" Id="{150b3fbb-dfc2-455f-b004-ac69e639d1d6}">
+      <Declaration><![CDATA[METHOD PROTECTED Error : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Idle" Id="{f2d3bb6e-14a6-4c99-8ab6-1155dc7e6e32}">
+      <Declaration><![CDATA[METHOD PROTECTED Idle : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Init" Id="{438c0a1d-f1f3-47de-9174-4ef5d89284e7}">
+      <Declaration><![CDATA[METHOD PROTECTED Init : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Start();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Prepare" Id="{8681d9df-bcc6-4e9c-ada9-97bbabfe7de1}">
+      <Declaration><![CDATA[METHOD PROTECTED Prepare : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Ready" Id="{1389caf0-6cf1-47c3-b93e-64c6e09ecc22}">
+      <Declaration><![CDATA[METHOD PROTECTED Ready : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Waiting" Id="{b6b8b871-4f1c-48b0-a67c-15daf67efb40}">
+      <Declaration><![CDATA[METHOD PROTECTED Waiting : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
     <LineIds Name="FB_TestChain2">
       <LineId Id="9" Count="0" />
     </LineIds>
-    <LineIds Name="FB_TestChain2.init">
-      <LineId Id="6" Count="1" />
-      <LineId Id="14" Count="0" />
-      <LineId Id="8" Count="1" />
-      <LineId Id="15" Count="0" />
-      <LineId Id="10" Count="3" />
+    <LineIds Name="FB_TestChain2.Busy">
+      <LineId Id="6" Count="9" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain2.Error">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain2.Idle">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain2.Init">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain2.Prepare">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain2.Ready">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="FB_TestChain2.Waiting">
       <LineId Id="5" Count="0" />
     </LineIds>
   </POU>
