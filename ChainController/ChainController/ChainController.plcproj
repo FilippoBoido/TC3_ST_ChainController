@@ -15,6 +15,11 @@
     <Implicit_KindOfTask>{1a8f3fe3-aa76-4f06-8e72-beb331102c6e}</Implicit_KindOfTask>
     <Implicit_Jitter_Distribution>{e2478432-ff19-4647-850e-e47c1995ea48}</Implicit_Jitter_Distribution>
     <LibraryReferences>{9d2e4d94-b3be-4207-8597-7dc460ea3ee3}</LibraryReferences>
+    <Company>FactoryAutomation</Company>
+    <Released>false</Released>
+    <Title>ChainController</Title>
+    <ProjectVersion>1.0.0.0</ProjectVersion>
+    <Author>Filippo Boido</Author>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DUTs\E_ChainStateMachine.TcDUT">
@@ -54,10 +59,14 @@
     <Compile Include="POUs\MAIN.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Version\Global_Version.TcGVL">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="DUTs" />
     <Folder Include="GVLs" />
+    <Folder Include="Version" />
     <Folder Include="VISUs" />
     <Folder Include="POUs" />
   </ItemGroup>
