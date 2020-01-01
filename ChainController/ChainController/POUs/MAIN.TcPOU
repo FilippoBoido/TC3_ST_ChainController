@@ -5,20 +5,19 @@
 VAR
 	step : UINT;
 	fbChainController : FB_ChainController;
-	fbChain1 : FB_TestChain1;
-	fbChain2 : FB_TestChain2;
+	fbChain1 : FB_TestChain1(1,'fbChain',fbChainController);
+	fbChain2 : FB_TestChain2(2,'fbChain',fbChainController);;
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbChain1(io_fbChainController := fbChainController);
-fbChain2(io_fbChainController := fbChainController);
+      <ST><![CDATA[fbChain1();
+fbChain2();
 
-fbChain1.define(uiChainNumber := 1, sChainName := 'fbChain1');
-fbChain2.define(uiChainNumber := 2, sChainname := 'fbChain2');
 
 CASE step OF
 
 	10: 
+		
 		fbChainController
 			.addChain(fbChain1)
 			.addChain(fbChain2);
@@ -34,11 +33,12 @@ END_CASE]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="44" Count="1" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="48" Count="2" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="50" Count="0" />
       <LineId Id="2" Count="0" />
       <LineId Id="10" Count="0" />
       <LineId Id="9" Count="0" />
+      <LineId Id="78" Count="0" />
       <LineId Id="11" Count="0" />
       <LineId Id="24" Count="2" />
       <LineId Id="42" Count="1" />

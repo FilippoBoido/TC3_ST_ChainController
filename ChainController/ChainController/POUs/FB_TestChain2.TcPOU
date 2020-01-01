@@ -10,7 +10,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[super^(io_fbChainController := io_fbChainController);]]></ST>
+      <ST><![CDATA[super^();]]></ST>
     </Implementation>
     <Method Name="Busy" Id="{4e42797b-f0e1-4d29-92aa-47174c5d6458}">
       <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
@@ -22,7 +22,7 @@ END_VAR
 0:
 
 10:
-	io_fbChainController.releaseForChain(sChainToRelease := 'fbChain1',THIS^);
+	rChainController.releaseForChain(sChainToRelease := 'fbChain1',THIS^);
 	fbStepWorkerInit.mNextStep(20);
 20:
 

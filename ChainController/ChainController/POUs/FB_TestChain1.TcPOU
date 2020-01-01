@@ -10,7 +10,7 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[super^(io_fbChainController := io_fbChainController);]]></ST>
+      <ST><![CDATA[super^();]]></ST>
     </Implementation>
     <Method Name="Busy" Id="{52999d6e-7318-424a-9025-f203b9d3dd83}">
       <Declaration><![CDATA[METHOD PROTECTED Busy : BOOL
@@ -21,7 +21,7 @@ END_VAR
         <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
 
 0:
-	IF io_fbChainController
+	IF rChainController
 		.releaseCheck(THIS^)
 		.releaseFromChain(sChainReleasing := 'fbChain2', THIS^)
 		.releaseResult(THIS^) 

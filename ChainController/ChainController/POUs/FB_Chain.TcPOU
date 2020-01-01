@@ -2,9 +2,7 @@
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
   <POU Name="FB_Chain" Id="{61defab6-4098-4715-9800-1cf7ddffc9a5}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Chain EXTENDS StateMachine IMPLEMENTS I_Chain
-VAR_IN_OUT
-	io_fbChainController : FB_ChainController;
-END_VAR
+
 VAR_OUTPUT
 	bReleaseResult : BOOL;
 END_VAR
@@ -22,6 +20,8 @@ VAR
 	fbStepWorkerError : FB_StepWorker;
 
 	
+	rChainController  : REFERENCE TO FB_ChainController;
+	
 END_VAR
 ]]></Declaration>
     <Implementation>
@@ -31,16 +31,20 @@ bReleaseResult := fbReleaseResult.getValue;
 
 ]]></ST>
     </Implementation>
-    <Method Name="define" Id="{6a1f9010-15d8-4362-9dd0-684cb74637ee}">
-      <Declaration><![CDATA[METHOD define : BOOL
+    <Method Name="FB_init" Id="{16249f62-bf5d-4b0a-be73-218a762943f4}">
+      <Declaration><![CDATA[METHOD FB_init : BOOL
 VAR_INPUT
+	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
+	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
 	uiChainNumber : UINT;
 	sChainName    : STRING;
+	rChainController  : REFERENCE TO FB_ChainController;
 END_VAR
 ]]></Declaration>
       <Implementation>
         <ST><![CDATA[THIS^.uiChainNumber := uiChainNumber;
-THIS^.sChainName := sChainName;]]></ST>
+THIS^.sChainName := sChainName;
+this^.rChainController := rChainController;]]></ST>
       </Implementation>
     </Method>
     <Property Name="getDefinition" Id="{dfa516b6-7b9e-48e4-b1c2-6cbfc0f5ec4f}">
@@ -96,9 +100,9 @@ END_VAR
       <LineId Id="25" Count="0" />
       <LineId Id="41" Count="1" />
     </LineIds>
-    <LineIds Name="FB_Chain.define">
-      <LineId Id="8" Count="0" />
-      <LineId Id="5" Count="0" />
+    <LineIds Name="FB_Chain.FB_init">
+      <LineId Id="11" Count="1" />
+      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_Chain.getDefinition.Get">
       <LineId Id="2" Count="0" />
