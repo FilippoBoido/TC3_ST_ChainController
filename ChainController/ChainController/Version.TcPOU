@@ -26,6 +26,10 @@ Initialization of FB_Chain occurs through FB_init in FB_Chain
 
 Version.txt replaced with Version PRG
 
+2.0.2.5:	Boido	020120
+
+VersionLib removed.
+
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -36,6 +40,10 @@ Version.txt replaced with Version PRG
       <LineId Id="22" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="24" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="29" Count="0" />
       <LineId Id="8" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
