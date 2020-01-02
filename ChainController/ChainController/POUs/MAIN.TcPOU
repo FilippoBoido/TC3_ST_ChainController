@@ -1,12 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="MAIN" Id="{358f7823-9894-4896-a8c5-c2f64c09a379}" SpecialFunc="None">
     <Declaration><![CDATA[PROGRAM MAIN
 VAR
 	step : UINT;
 	fbChainController : FB_ChainController;
-	fbChain1 : FB_TestChain1(1,'fbChain',fbChainController);
-	fbChain2 : FB_TestChain2(2,'fbChain',fbChainController);;
+	fbChain1 : 	FB_TestChain1 := (init_uiChainNumber := 1,init_sChainName :='fbChain',rChainController :=fbChainController);
+	fbChain2 : FB_TestChain2 := (init_uiChainNumber:=2,init_sChainName:='fbChain',rChainController:=fbChainController);
 END_VAR
 ]]></Declaration>
     <Implementation>

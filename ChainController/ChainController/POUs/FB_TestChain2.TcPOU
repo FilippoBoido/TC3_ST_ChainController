@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="FB_TestChain2" Id="{1f2848b6-6170-45e2-b2f6-0f3a28090b40}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_TestChain2 EXTENDS FB_Chain
 VAR_INPUT
@@ -23,7 +23,7 @@ END_VAR
 
 10:
 	rChainController.releaseForChain(sChainToRelease := 'fbChain1',THIS^);
-	fbStepWorkerInit.mNextStep(20);
+	fbStepWorkerBusy.mNextStep(20);
 20:
 
 30:

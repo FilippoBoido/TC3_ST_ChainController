@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="FB_TestChain1" Id="{743f7692-10f4-4273-a2c5-6e6083703b28}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_TestChain1 EXTENDS FB_Chain
 VAR_INPUT
@@ -21,15 +21,15 @@ END_VAR
         <ST><![CDATA[CASE fbStepWorkerBusy.uiStep OF
 
 0:
+	;
+10:
 	IF rChainController
 		.releaseCheck(THIS^)
 		.releaseFromChain(sChainReleasing := 'fbChain2', THIS^)
 		.releaseResult(THIS^) 
 	THEN
-		fbStepWorkerInit.mNextStep(10);
+		fbStepWorkerBusy.mNextStep(20);
 	END_IF
-10:
-	;
 20:
 	;
 30:
@@ -95,7 +95,10 @@ END_VAR
       <LineId Id="9" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestChain1.Busy">
-      <LineId Id="6" Count="15" />
+      <LineId Id="6" Count="2" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="25" Count="5" />
+      <LineId Id="17" Count="4" />
       <LineId Id="5" Count="0" />
     </LineIds>
     <LineIds Name="FB_TestChain1.Error">
