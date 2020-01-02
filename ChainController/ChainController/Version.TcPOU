@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.0">
+  <POU Name="Version" Id="{68325ea1-f41c-4a46-a2db-1bd204db869b}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM Version
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*
+1.1.0.1:	Boido	010120
+
+Added new versioning System.
+To update the project version open the VersionLib and modify the parameters.
+
+1.1.1.2:	Boido	010120
+
+Deleted the var_io chaincontroller from FB_Chain.
+ChainController must now be set with the help of the define method in FB_Chain.
+
+2.0.0.3:	Boido	010120
+
+Deleted the define method from FB_Chain.
+Initialization of FB_Chain occurs through FB_init in FB_Chain
+
+2.0.1.4:	Boido	020120
+
+Version.txt replaced with Version PRG
+
+*)]]></ST>
+    </Implementation>
+    <LineIds Name="Version">
+      <LineId Id="5" Count="0" />
+      <LineId Id="9" Count="12" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

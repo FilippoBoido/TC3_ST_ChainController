@@ -18,7 +18,7 @@
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
     <Title>ChainControllerLib</Title>
-    <ProjectVersion>2.0.0.3</ProjectVersion>
+    <ProjectVersion>2.0.1.4</ProjectVersion>
     <Author>Filippo Boido</Author>
     <Description>
     </Description>
@@ -60,6 +60,9 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MAIN.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Version.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -104,11 +107,11 @@
         </Parameter>
         <Parameter>
           <Key>REVISION</Key>
-          <Value>0</Value>
+          <Value>1</Value>
         </Parameter>
         <Parameter>
           <Key>BUILD</Key>
-          <Value>3</Value>
+          <Value>4</Value>
         </Parameter>
       </Parameters>
     </PlaceholderReference>
@@ -117,11 +120,6 @@
     <None Include="ChainController.tmc">
       <SubType>Content</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Version.txt">
-      <SubType>Content</SubType>
-    </Content>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>
