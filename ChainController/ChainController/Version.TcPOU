@@ -33,6 +33,11 @@ VersionLib removed.
 3.0.0.6:	Boido	020120
 
 FB_init removed from FB_Chain.
+
+3.0.1.7:	Boido 	040120
+
+Removed callAfterInit method from FB_Chain
+Check for null reference in FB_Chain
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -49,6 +54,11 @@ FB_init removed from FB_Chain.
       <LineId Id="29" Count="0" />
       <LineId Id="37" Count="2" />
       <LineId Id="36" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="43" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="47" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
   </POU>

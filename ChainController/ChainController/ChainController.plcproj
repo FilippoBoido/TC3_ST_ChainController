@@ -18,7 +18,7 @@
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
     <Title>ChainControllerLib</Title>
-    <ProjectVersion>3.0.0.6</ProjectVersion>
+    <ProjectVersion>3.0.1.7</ProjectVersion>
     <Author>Filippo Boido</Author>
     <Description>
     </Description>
@@ -98,11 +98,6 @@
     <None Include="ChainController.tmc">
       <SubType>Content</SubType>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <SubObject Include="FB_Chain.FB_init">
-      <ExcludeFromBuild>true</ExcludeFromBuild>
-    </SubObject>
   </ItemGroup>
   <ProjectExtensions>
     <PlcProjectOptions>

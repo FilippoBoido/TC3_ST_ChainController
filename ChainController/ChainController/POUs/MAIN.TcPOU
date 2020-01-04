@@ -5,8 +5,8 @@
 VAR
 	step : UINT;
 	fbChainController : FB_ChainController;
-	fbChain1 : 	FB_TestChain1 := (init_uiChainNumber := 1,init_sChainName :='fbChain',rChainController :=fbChainController);
-	fbChain2 : FB_TestChain2 := (init_uiChainNumber:=2,init_sChainName:='fbChain',rChainController:=fbChainController);
+	fbChain1 : 	FB_TestChain1 := (sChainName :='fbChain',rChainController :=fbChainController);
+	fbChain2 : FB_TestChain2 := (sChainName:='fbChain',rChainController:=fbChainController);
 END_VAR
 ]]></Declaration>
     <Implementation>

@@ -1,12 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.2">
   <POU Name="FB_Chain" Id="{61defab6-4098-4715-9800-1cf7ddffc9a5}" SpecialFunc="None">
-    <Declaration><![CDATA[{attribute 'call_after_init'}
-FUNCTION_BLOCK ABSTRACT FB_Chain EXTENDS StateMachine IMPLEMENTS I_Chain
+    <Declaration><![CDATA[FUNCTION_BLOCK ABSTRACT FB_Chain EXTENDS StateMachine IMPLEMENTS I_Chain
 VAR_INPUT CONSTANT
-	init_uiChainNumber : UINT;
-	init_sChainName : STRING;
-	init_rChainController : REFERENCE TO FB_ChainController;
+	uiChainNumber : UINT;
+	sChainName : STRING;
+	rChainController : REFERENCE TO FB_ChainController;
 END_VAR
 
 VAR_OUTPUT
@@ -14,8 +13,7 @@ VAR_OUTPUT
 END_VAR
 VAR
 	eChainStateMachine : E_ChainStateMachine;
-	uiChainNumber : UINT;
-	sChainName : STRING;
+
 	fbReleaseResult : BoolOut;
 	aChainReleases : ARRAY[1..cMaxChains] OF BOOL;
 
@@ -25,46 +23,23 @@ VAR
 	fbStepWorkerWaiting : FB_StepWorker;
 	fbStepWorkerError : FB_StepWorker;
 
-	
-	rChainController  : REFERENCE TO FB_ChainController;
-	
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[SUPER^();
+      <ST><![CDATA[IF sChainName = '' 
+	OR NOT __ISVALIDREF(rChainController)
+THEN
+	
+	eStateMachine := eError;
+	RETURN;
+END_IF
+
+SUPER^();
 bReleaseResult := fbReleaseResult.getValue;
 
 
 ]]></ST>
     </Implementation>
-    <Method Name="CallAfterInit" Id="{4ba6d78d-8be9-48a0-bda2-471d0fbb80cd}">
-      <Declaration><![CDATA[{attribute 'call_after_init'}
-METHOD PRIVATE CallAfterInit : BOOL
-VAR_INPUT
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[THIS^.uiChainNumber := init_uiChainNumber ;
-THIS^.sChainName := init_sChainName;
-THIS^.rChainController := init_rChainController;]]></ST>
-      </Implementation>
-    </Method>
-    <Method Name="FB_init" Id="{16249f62-bf5d-4b0a-be73-218a762943f4}">
-      <Declaration><![CDATA[METHOD FB_init : BOOL
-VAR_INPUT
-	bInitRetains : BOOL; // if TRUE, the retain variables are initialized (warm start / cold start)
-	bInCopyCode : BOOL;  // if TRUE, the instance afterwards gets moved into the copy code (online change)
-	uiChainNumber : UINT;
-	sChainName    : STRING;
-	rChainController  : REFERENCE TO FB_ChainController;
-END_VAR
-]]></Declaration>
-      <Implementation>
-        <ST><![CDATA[THIS^.uiChainNumber := uiChainNumber;
-THIS^.sChainName := sChainName;
-this^.rChainController := rChainController;]]></ST>
-      </Implementation>
-    </Method>
     <Property Name="getDefinition" Id="{dfa516b6-7b9e-48e4-b1c2-6cbfc0f5ec4f}">
       <Declaration><![CDATA[PROPERTY getDefinition : ST_ChainDefinition]]></Declaration>
       <Get Name="Get" Id="{9f47331d-cabd-4bee-9434-736872b919a7}">
@@ -113,18 +88,17 @@ END_VAR
       </Get>
     </Property>
     <LineIds Name="FB_Chain">
+      <LineId Id="105" Count="0" />
+      <LineId Id="110" Count="1" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="107" Count="0" />
+      <LineId Id="112" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="76" Count="0" />
       <LineId Id="25" Count="0" />
       <LineId Id="41" Count="1" />
-    </LineIds>
-    <LineIds Name="FB_Chain.CallAfterInit">
-      <LineId Id="7" Count="1" />
-      <LineId Id="5" Count="0" />
-    </LineIds>
-    <LineIds Name="FB_Chain.FB_init">
-      <LineId Id="11" Count="1" />
-      <LineId Id="7" Count="0" />
     </LineIds>
     <LineIds Name="FB_Chain.getDefinition.Get">
       <LineId Id="2" Count="0" />
