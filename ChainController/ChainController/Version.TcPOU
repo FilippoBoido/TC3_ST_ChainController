@@ -38,6 +38,10 @@ FB_init removed from FB_Chain.
 
 Removed callAfterInit method from FB_Chain
 Check for null reference in FB_Chain
+
+3.0.2.8:	Boido 	050120
+
+E_ChainStateMachine deleted.
 *)]]></ST>
     </Implementation>
     <LineIds Name="Version">
@@ -59,6 +63,8 @@ Check for null reference in FB_Chain
       <LineId Id="46" Count="0" />
       <LineId Id="45" Count="0" />
       <LineId Id="47" Count="0" />
+      <LineId Id="52" Count="2" />
+      <LineId Id="51" Count="0" />
       <LineId Id="6" Count="0" />
     </LineIds>
   </POU>

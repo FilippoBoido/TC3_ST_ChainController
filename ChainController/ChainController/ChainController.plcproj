@@ -18,16 +18,13 @@
     <Company>FactoryAutomation</Company>
     <Released>false</Released>
     <Title>ChainControllerLib</Title>
-    <ProjectVersion>3.0.1.7</ProjectVersion>
+    <ProjectVersion>3.0.2.8</ProjectVersion>
     <Author>Filippo Boido</Author>
     <Description>
     </Description>
     <DocFormat>reStructuredText</DocFormat>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="DUTs\E_ChainStateMachine.TcDUT">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="DUTs\ST_ChainDefinition.TcDUT">
       <SubType>Code</SubType>
     </Compile>

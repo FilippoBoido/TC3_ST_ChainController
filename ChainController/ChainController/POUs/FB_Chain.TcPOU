@@ -12,7 +12,6 @@ VAR_OUTPUT
 	bReleaseResult : BOOL;
 END_VAR
 VAR
-	eChainStateMachine : E_ChainStateMachine;
 
 	fbReleaseResult : BoolOut;
 	aChainReleases : ARRAY[1..cMaxChains] OF BOOL;
